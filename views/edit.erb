@@ -1,7 +1,7 @@
 <% if @note %>
 	<form action="/<%= @note.id %>" method="post" id="edit">
 		<input type="hidden" name="_method" value="put">
-		<textarea name="content"><%= @note.content %></textarea>
+		<textarea name="content"><%=h @note.content %></textarea>
 		<input type="checkbox" name="complete" <%= "checked" if @note.complete %>>
 		<input type="submit">
 	</form>
