@@ -44,9 +44,11 @@ end
 
 post '/' do
 	n = Note.new
-	n.content = params[:content]
-	n.created_at = Time.now
-	n.updated_at = Time.now
+	n.attributes = {
+		:content => params[:content],
+		:created_at => Time.now,
+		:updated_at => Time.now
+	}
 	if n.save
 		redirect '/', :notice => 'Note created successfully.'
 	else
@@ -71,9 +73,11 @@ end
 
 put '/:id' do
 	n = Note.get params[:id]
-	n.content = params[:content]
-	n.complete = params[:complete] ? 1 : 0
-	n.updated_at = Time.now
+	n.attributes = {
+		:content => params[:content],
+		:complete => params[:complete] ? 1 : 0,
+		:updated_at => Time.now
+	}
 	if n.save
 		redirect '/', :notice => 'Note updated successfully.'
 	else
@@ -105,8 +109,10 @@ get '/:id/complete' do
 	unless n
 		redirect '/', :error => "Can't find that note."
 	end
-	n.complete = n.complete ? 0 : 1 # flip it
-	n.updated_at = Time.now
+	n.attributes = {
+		:complete => n.complete ? 0 : 1, # flip it
+		:updated_at => Time.now
+	}
 	if n.save
 		redirect '/', :notice => 'Note marked as complete.'
 	else
