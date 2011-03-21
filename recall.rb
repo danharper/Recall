@@ -62,10 +62,10 @@ end
 get '/:id' do
 	@note = Note.get params[:id]
 	@title = "Edit note ##{params[:id]}"
-	unless @note
-		redirect '/', :error => "Can't find that note."
-	else
+	if @note
 		erb :edit
+	else
+		redirect '/', :error => "Can't find that note."
 	end
 end
 
@@ -84,10 +84,10 @@ end
 get '/:id/delete' do
 	@note = Note.get params[:id]
 	@title = "Confirm deletion of note ##{params[:id]}"
-	unless @note
-		redirect '/', :error => "Can't find that note."
+	if @note
+		erb :edit
 	else
-		erb :delete
+		redirect '/', :error => "Can't find that note."
 	end
 end
 
