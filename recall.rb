@@ -73,6 +73,9 @@ end
 
 put '/:id' do
 	n = Note.get params[:id]
+	unless n
+		redirect '/', :error => "Can't find that note."
+	end
 	n.attributes = {
 		:content => params[:content],
 		:complete => params[:complete] ? 1 : 0,
@@ -81,7 +84,7 @@ put '/:id' do
 	if n.save
 		redirect '/', :notice => 'Note updated successfully.'
 	else
-		redirect "/", :error => 'Error updating note.'
+		redirect '/', :error => 'Error updating note.'
 	end
 end
 
